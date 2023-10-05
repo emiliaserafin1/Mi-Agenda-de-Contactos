@@ -1,3 +1,6 @@
+using Mi_Agenda_de_Contactos.Migrations;
+using Microsoft.EntityFrameworkCore;
+
 namespace Mi_Agenda_de_Contactos
 {
     public class Program
@@ -12,7 +15,9 @@ namespace Mi_Agenda_de_Contactos
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+           
+            builder.Services.AddDbContext<AgendaContext>(dbContextOptions => dbContextOptions.UseSqlite(  //para crear el contexto de Entity frk
+                builder.Configuration["ConnectionStrings:AgendaAPIDBConnectionString"])); // connection string, se suele mandar en otro archivo
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,6 +35,7 @@ namespace Mi_Agenda_de_Contactos
             app.MapControllers();
 
             app.Run();
+
         }
     }
 }
